@@ -23,9 +23,11 @@ var upload = multer({ storage: storage });
 
 //************img middelware end  *********** */
 
-
-
 router.get("/", (req, resp) => {
+    resp.render("myntra")
+})
+
+router.get("/registration", (req, resp) => {
     resp.render("registration")
 })
 
