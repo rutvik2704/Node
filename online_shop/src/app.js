@@ -22,7 +22,8 @@ app.set("views",viewpath)
 hbs.registerPartials(partialpath)
 app.use(express.static(publicpath))
 
-
+app.use("/",require("../router/userrouter"))
+app.use("/",require("../router/admirouter"))
 app.listen(PORT, (req, resp) => {
     console.log("server running on port : " + PORT);
 })
