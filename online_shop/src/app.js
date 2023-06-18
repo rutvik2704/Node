@@ -1,29 +1,31 @@
 const express = require("express")
 const app = express()
-const mongoose = require("mongoose")
-const path= require("path")
-const hbs = require("hbs")
 require("dotenv").config()
-const bodyParser = require("body-parser")
-const cookieParser = require("cookie-parser")
-const PORT = process.env.PORT || 3000
-const DBURL = process.env.DBURL
+const PORT = process.env.PORT
+const DBURL= process.env.DBURL
+const hbs = require("hbs")
+const path = require("path")
+const mongoose = require("mongoose")
+
+
+
+const publicPath = path.join(__dirname,"../public")
+const viewPath = path.join(__dirname,"../templetes/views")
+const partialPath = path.join(__dirname,"../templetes/partials")
+
 mongoose.connect(DBURL).then(() => {
     console.log("DB connected");
-}) 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
-const publicpath = path.join(__dirname,"../pubilc")
-const viewpath = path.join(__dirname, "../templetes/views")
-const partialpath = path.join(__dirname, "../templetes/partials")
+})
 
-app.set ("view engine","hbs");
-app.set("views",viewpath)
-hbs.registerPartials(partialpath)
-app.use(express.static(publicpath))
+app.set("view engine","hbs")
+app.set("views",viewPath)
+hbs.registerPartials(partialPath)
+app.use(express.static(publicPath))
+
 
 app.use("/",require("../router/userrouter"))
-app.use("/",require("../router/admirouter"))
-app.listen(PORT, (req, resp) => {
-    console.log("server running on port : " + PORT);
+app.use("/",require("../router/adminrouter"))
+
+app.listen(PORT,()=>{
+    console.log("server running on port : "+PORT);
 })
