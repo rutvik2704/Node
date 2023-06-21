@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
    <head>
       <!-- basic -->
@@ -35,28 +35,29 @@
       {{>header}}
       <!-- header section end -->
       <!-- contact section start -->
-      <div class="contact_section layout_padding">
-         <div class="container-fluid">
-            <h1 class="contact_taital">Login here</h1>
+      
+         <div class="container-fluid " style="min-height:100px">
+            <h1 class="contact_taital">User Register</h1>
             <div class="contact_section_2">
                <div class="row">
-                  <div class="col-md-6">
-                     <div class="image_7"><img src="images/img-7.png"></div>
-                  </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6 m-auto">
                      <div class="mail_section_1">
-                        <input type="text" class="mail_text" placeholder="Your Name" name="Your Name">
-                        <input type="text" class="mail_text" placeholder="Phone Number" name="Phone Number">
-                        <input type="text" class="mail_text" placeholder="Email" name="Email">
-                        <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="Massage"></textarea>
-                        <div class="send_bt"><a href="#">SEND</a></div>
+                        <input type="text" class="mail_text" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your Name" name="Your Name">
+                        <input type="text" class="mail_text" id="number" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your Number" name="Phone Number">
+                        <input type="text" class="mail_text"   id="e-mail"placeholder="Email"required="required" data-validation-required-message="Please enter your Email"  name="Email">
+                        <input type="password" class="mail_text" id="pass" placeholder="Your Password"required="required" data-validation-required-message="Please enter your Password" />
+                        <div>
+                            <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Sign Up</button>
+                            <a href="login">Already registed? login here</a>
+                        </div>
                      </div>
                   </div>
                </div>
             </div>
          </div>
-      </div>
+    
       <!-- contact section end -->
      
    </body>
-</html>
+</html> 
+

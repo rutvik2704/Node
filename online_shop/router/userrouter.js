@@ -21,5 +21,7 @@ router.get("/login",(req,resp)=>{
 router.get("/reg",(req,resp)=>{
     resp.render("register")
 })
-
+router.get("/cart",(req,resp)=>{
+    resp.render("cart")
+})
 module.exports=router
