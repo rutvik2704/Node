@@ -6,7 +6,11 @@ const DBURL= process.env.DBURL
 const hbs = require("hbs")
 const path = require("path")
 const mongoose = require("mongoose")
-
+const { error } = require("console")
+var bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
 
 
 const publicPath = path.join(__dirname,"../public")
@@ -15,6 +19,8 @@ const partialPath = path.join(__dirname,"../templetes/partials")
 
 mongoose.connect(DBURL).then(() => {
     console.log("DB connected");
+}).catch(error=>{
+    console.log(error);
 })
 
 app.set("view engine","hbs")

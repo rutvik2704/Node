@@ -24,4 +24,16 @@ router.get("/reg",(req,resp)=>{
 router.get("/cart",(req,resp)=>{
     resp.render("cart")
 })
+//************************user register************** */
+const user =require("../model/users")
+router.post("/do_register",async(req,resp)=>{
+    try {
+        const User =new user(req.body)
+        await User.save();
+        resp.render("register",{msg:"Registration successfully done !!!"})
+
+    } catch (error) {
+        console.log(error);
+    }
+})
 module.exports=router
