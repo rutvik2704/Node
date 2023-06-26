@@ -38,18 +38,21 @@
       
          <div class="container-fluid " style="min-height:100px">
             <h1 class="contact_taital">User  Login</h1>
+
             <div class="contact_section_2">
                <div class="row">
                   <div class="col-md-6 m-auto">
+                     <div class='text-danger'>{{err}}</div>
+                     <form action="do_login" method="post">
                      <div class="mail_section_1">
                         <input type="text" class="mail_text"  id="e-mail"placeholder="Email" name="Email">
-                        <input type="password" class="mail_text" id="pass" placeholder="Your Password"
-                                required="required" data-validation-required-message="Please enter your Password" />
+                        <input type="password" class="mail_text" id="pass" placeholder="Your Password" name="pass" />
                         <div>
                             <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Sign In</button>
                             <a href="reg">New User? register here</a>
                         </div>
                      </div>
+                     </form>
                   </div>
                </div>
             </div>
