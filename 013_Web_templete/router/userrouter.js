@@ -57,20 +57,12 @@ router.post("/userLogin", async (req, resp) => {
             resp.render("login", { err: "Max login limit reached !!!!" })
             return;
         }
-
-
         const isValid = await bcrypt.compare(userpass, userdata.pass);
         if (isValid) {
-
             const userdata1 = await User.find()
-
-
-
             const token = await userdata.generateToken();
-
             resp.cookie("jwt", token)
             resp.render("home", { user: userdata.uname, udata: userdata1 })
-
         }
         else {
             resp.render("login", { err: "Invalid credentials !!!" })
