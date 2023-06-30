@@ -141,7 +141,7 @@ router.get("/Aproduct",aauth,async(req,resp)=>{
             }
             else{
                 await product.findByIdAndUpdate(req.body.id,{
-                    catid:req.body.catid,
+                    catname:req.body.catname,
                     pname:req.body.pname,
                     price:req.body.price,
                     qty:req.body.qty,
@@ -177,6 +177,18 @@ router.get("/Aproduct",aauth,async(req,resp)=>{
             console.log(error);
         }
     })
+/***************************user*********************/
+    router.get("/viewusers",async(req,resp)=>{
+        User = require("../model/users")
+        try {
+            const users = await User.find()
+            resp.render("admin_users",{userdata:users})
+            
+        } catch (error) {
+            console.log(error);
+        }
+    })
+
 
 
 

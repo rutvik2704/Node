@@ -1,6 +1,9 @@
 const router = require("express").Router()
 const auth = require("../middleware/user_auth")
 const category=require("../model/categories")
+const User =require("../model/users") 
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 router.get("/",async(req,resp)=>{
     const data = await category.find()
     resp.render("index",{catdata:data})
@@ -30,9 +33,8 @@ router.get("/reg",(req,resp)=>{
 
 
 //************************user register***************/
-const user =require("../model/users")
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+
+
 router.post("/do_register",async(req,resp)=>{
     try {
         const User =new user(req.body)
@@ -46,7 +48,7 @@ router.post("/do_register",async(req,resp)=>{
     }
 })
 //********************user login*****************/
- const User =require("../model/users") 
+
 router.post("/do_login",async(req,resp)=>{
     try {
         const udata = await User.findOne({email:req.body.email})
