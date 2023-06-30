@@ -3,23 +3,23 @@ const User = require("../model/users")
 
 const auth = async (req, resp, next) => {
     const token = req.cookies.jwt
-
+  
     try {
-        const data = await jwt.verify(token, process.env.SKEY)
+        const data = await jwt.verify(token, process.env.S_KEY)
         if (data) {
             const userdata = await User.findOne({ _id: data._id })
 
-            const myt = userdata.Tokens.find(e => {
-                return e.token == token
-            })
+            // const myt = userdata.Tokens.find(e => {
+            //     return e.token == token
+            // })
 
-            if (myt == undefined) {
-                resp.render("login", { err: "Please login first!!!" })
-            } else {
+            // if (myt == undefined) {
+            //     resp.render("login", { err: "Please login first!!!" })
+            // } else {
                 req.user = userdata;
                 req.token = token
                 next();
-            }
+           // }
 
 
         }
@@ -27,6 +27,7 @@ const auth = async (req, resp, next) => {
             resp.render("login", { err: "Please login first!!!" })
         }
     } catch (error) {
+        console.log(error);
         resp.render("login", { err: "Please login first!!!" })
     }
 

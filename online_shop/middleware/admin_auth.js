@@ -15,10 +15,10 @@ const auth = async(req,resp,next)=>{
             
         }else
         {
-            resp.render("adminlogin",{err:"Please login first!!!"})
+            resp.render("admin_login",{err:"Please login first!!!"})
         }
     } catch (error) {
-        resp.render("adminlogin",{err:"Please login first !!!"})
+        resp.render("admin_login",{err:"Please login first !!!"})
     }
 
 
