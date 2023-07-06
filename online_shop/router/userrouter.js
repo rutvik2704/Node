@@ -127,17 +127,6 @@ router.get("/removecart",async(req,resp)=>{
         console.log(error);
     }
 })
-router.get("/changeQty",async(req,resp)=>{
-    try {
-        const cartid = req.query.cartid
-        const value = req.query.value
-        const cartdata =await Cart.findOne({_id:cartid})
 
-        var qty=cartdata.qty+Number(value)
-        console.log(qty);
-    } catch (error) {
-        console.log(error);
-    }
-})
 module.exports=router
 //

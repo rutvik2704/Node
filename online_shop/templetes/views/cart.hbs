@@ -322,9 +322,7 @@ button.btn{
     <script>
          function changeQty(cartid,value)
          {
-          $.get("changeQty",{cartid,value},function(rt){
-            alert("updated")
-          })
+            alert(cartid+""+value)
          }
     </script>
 </head>
