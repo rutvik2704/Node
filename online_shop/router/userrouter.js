@@ -79,7 +79,12 @@ router.get("/cart",auth,async(req,resp)=>{
     const user =req.user
 
     const cartdata=await Cart.aggregate([{$match:{uid:user._id}},{$lookup:{from:"products",localField:"pid",foreignField:"_id",as:"product"}}])
-    resp.render("cart",{currentuser:user.uname,cartdata:cartdata})
+    var sum =0;
+    for(var i=0;i<cartdata.length;i++)
+    {
+        sum = sum + cartdata[i].total
+    }
+    resp.render("cart",{currentuser:user.uname,cartdata:cartdata,sum:sum})
 })
 router.get("/add_cart",auth,async(req,resp)=>{
     
@@ -87,14 +92,15 @@ router.get("/add_cart",auth,async(req,resp)=>{
     const uid = req.user._id
     try {
         const pdata = await product.findOne({_id:pid})
-        const cartdata = await Cart.findOne({pid:pid})
+        const cartdata = await Cart.findOne({$and:[{pid:pid},{uid:uid}]})
+
         if(cartdata){
             var qty =cartdata.qty
             qty++;
             var price =qty*pdata.price
-            console.log(price); 
+             
             await Cart.findByIdAndUpdate(cartdata._id,{qty:qty,total:price})
-            resp.redirect("/")
+            resp.send("product added into cart!!!")
 
         }
         else{
@@ -106,11 +112,32 @@ router.get("/add_cart",auth,async(req,resp)=>{
             total:pdata.price
         })
         await cart.save()
-        resp.redirect("/")
+        resp.send("product added into cart!!!")
     }
     } catch (error) {
      console.log(error);   
     }
 })
+router.get("/removecart",async(req,resp)=>{
+    try {
+        const _id =req.query.cid;
+        await Cart.findByIdAndDelete(_id)
+        resp.redirect("cart")
+    } catch (error) {
+        console.log(error);
+    }
+})
+router.get("/changeQty",async(req,resp)=>{
+    try {
+        const cartid = req.query.cartid
+        const value = req.query.value
+        const cartdata =await Cart.findOne({_id:cartid})
+
+        var qty=cartdata.qty+Number(value)
+        console.log(qty);
+    } catch (error) {
+        console.log(error);
+    }
+})
 module.exports=router
-//20:08_11
+//

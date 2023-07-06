@@ -319,6 +319,14 @@ button.btn{
     }
 }
     </style>
+    <script>
+         function changeQty(cartid,value)
+         {
+          $.get("changeQty",{cartid,value},function(rt){
+            alert("updated")
+          })
+         }
+    </script>
 </head>
 <body>
   {{>header}}
@@ -380,7 +388,7 @@ button.btn{
                                 Rs.{{this.total}}
                             </td>
                             <td>
-                               <button class="btn btn-sm btn-primary" onclick="removecart('{{this._id}}')">X</button>
+                               <button class="btn btn-sm btn-primary" onclick="removecart('{{this._id}}')"><a href="removecart?cid={{this._id}}">Remove</a></button>
                             </td>
                         </tr>
                         {{/each}}
@@ -394,18 +402,22 @@ button.btn{
             <div class="text-muted">
                 <button class="btn" type="button" data-toggle="collapse" data-target="#table" aria-expanded="false"
                     aria-controls="table">
-                    Total
                 </button>
             </div>
             <div class="d-flex flex-column justify-content-end align-items-end">
                 <div class="d-flex px-3 pr-md-5 py-1 subtotal">
-                    <div class="px-4">Subtotal</div>
-                    <div class="h5 font-weight-bold px-md-2">$1,340</div>
+                    <div class="px-4">SubTotal</div>
+                    <div class="h5 font-weight-bold px-md-2">Rs.{{sum}}</div>
+                    
                 </div>
-                <div class="text-muted tag">
-                    +add all the items to cart <span class="fas fa-shopping-cart pl-1"></span>
+                 <div class="d-flex px-3 pr-md-5 py-1 subtotal">
+                 <button class="btn" type="button" data-toggle="collapse" data-target="#table" aria-expanded="false"
+                    aria-controls="table"> Order now
+                </button>
                 </div>
+                
             </div>
+
         </div>
     </div>
 </body>

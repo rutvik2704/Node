@@ -49,6 +49,17 @@
   border-bottom: 0;
 }
       </style>
+      <script>
+
+               function add_cart(value)
+                  {
+
+                       $.get("/add_cart",{pid:value},function(rt){
+                        alert(rt)
+                       })
+                  }
+
+      </script>
    </head>
    <body>
       <!-- header section start -->
@@ -112,8 +123,8 @@
                         </div>
                               <span style="color: #000000;">{{this.pname}}</span><br>
                               <span style="color: #000000;">Rs. {{this.price}}</span><br>
-                              <a href="add_cart?pid={{this._id}}"class="add-to-cart">Add to Cart</a>
-                              {{!-- <button class="add-to-cart" href="cart">Add to Cart</button> --}}
+                              {{!-- <a href="add_cart?pid={{this._id}}"class="add-to-cart">Add to Cart</a> --}}
+                              <button class="add-to-cart"  onclick="add_cart('{{this._id}}')">Add to Cart</button>
                      </div>
                   {{/each}}
                  
