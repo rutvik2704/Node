@@ -14,7 +14,7 @@
    <div class="header_section">
          <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">                 
-                  {{!-- <ul class="navbar-nav mr-auto">
+                  <ul class="navbar-nav mr-auto">
                      <li class="nav-item active">
                         <a class="nav-link" href="/">Home</a>
                      </li>
@@ -27,37 +27,18 @@
                      <li class="nav-item">
                         <a class="nav-link" href="contact">Contact</a>
                      </li>
-                     <li class="nav-item dropdown">
+                     {{!-- <li class="nav-item dropdown">
                         <a class="nav-link" href="category">category</a>
-                     </li>
+                     </li> --}}
+                      <select style="margin-left: 20px;">
+                               <option value="Category">Category</option>
+                              {{#each catdata}}
+                                <option value="">{{this.catname}}</option>
+                              {{/each}}
+                      </select>
                      
-                  </ul> --}}
-                  <div class="container-fluid">
-                     <a class="navbar-brand" href="/"><img src="images/logo.png" alt=""></a>
-                     <a class="nav-link nav-item" href="/">Home</a>
-                     <a class="nav-link nav-item" href="about">About</a>
-                     <a class="nav-link nav-item" href="product">Product</a>
-                     <a class="nav-link nav-item" href="contact">Contact</a>
-                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                      </button> 
-                     <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                        <ul class="navbar-nav">
-                           <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle" href="#navbar-vertical" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                 category
-                              </a>
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink"id ="#navbar-vertical">
-                                 
-                                 {{#each catdata}}
-                                 <a class="dropdown-item" href="">{{this.catname}}</a>
-                                 {{/each}}
-
-                              </ul>
-                           </li>
-                        </ul>
-                     </div>  
-                  </div>
+                  </ul>
+                  
                   <form class="form-inline my-1 my-lg-0">
                      <div class="navbar-nav ml-auto py-0">
                             <a href="login" class="nav-item nav-link">Login</a>
@@ -71,15 +52,5 @@
             </nav>
          </div>
       </div>
-
-      {{!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">category</a>
-                              <ul class="dropdown-menu">
-                                 {{#each catdata}}
-                                 <li><a class="dropdown-item" href="#">{{this.catname}}</a></li>
-                                 {{/each}}
-                              </ul>
-                     </li> --}}
-   
 </body>
 </html>

@@ -29,6 +29,26 @@
       <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
       <!-- owl stylesheets -->
       <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
+      <style>
+         .add-to-cart {
+  width: 150px;
+  height: 2.7rem;
+  font-family: "Lato", sans-serif;
+  font-size: 1rem;
+  background-color: #4787e9;
+  color: #fff;
+  font-weight: 400;
+  border: 0;
+  border-bottom: 0.3rem solid #1e56ed;
+  border-radius: 0.4rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.add-to-cart:active {
+  border-bottom: 0;
+}
+      </style>
    </head>
    <body>
       <!-- header section start -->
@@ -75,7 +95,7 @@
       <!-- banner section end -->
       
       <!-- product section start -->
-      <div class="product_section layout_padding">
+  <div class="product_section layout_padding">
          <div class="container">
             <div class="row">
                <div class="col-md-12">
@@ -83,26 +103,21 @@
                   <p class="product_text">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim</p>
                </div>
             </div>
-           
             <div class="row">
-                {{#each pdata}}
-               <div class="col-md-12">
-                  <div class="owl-carousel owl-theme">
-                     <div class="item">
-                        <div class="image_main">
-                           <img  class="img-fluid w-100" src="productimg/{{this.img}}" alt="Img not available" /></div>
+               <div class="col-md-12"style="display: flex; flex-wrap: wrap;">
+                  {{#each pdata}}
+                     <div class="item" style="margin: 10px;" >
+                        <div class="image_main" >
+                           <img src="productimg/{{this.img}}" alt="image"  width="200px" height="100px"/>
                         </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                           <h6 class="text-truncate mb-3">{{this.pname}}</h6>
-                           <div class="d-flex justify-content-center">
-                               <h6>Rs. {{this.price}}</h6><h6 class="text-muted ml-2"></h6>
-                           </div>
-                        </div>
-                    </div>
-                     
-                  </div>
+                              <span style="color: #000000;">{{this.pname}}</span><br>
+                              <span style="color: #000000;">Rs. {{this.price}}</span><br>
+                              <a href="add_cart?pid={{this._id}}"class="add-to-cart">Add to Cart</a>
+                              {{!-- <button class="add-to-cart" href="cart">Add to Cart</button> --}}
+                     </div>
+                  {{/each}}
+                 
                </div>
-               {{/each}}
             </div>
          </div>
       </div>
@@ -187,7 +202,7 @@
       <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
       <script src="js/custom.js"></script>
       <!-- javascript --> 
-      <script src="js/owl.carousel.js"></script>
+      {{!-- <script src="js/owl.carousel.js"></script> --}}
       <!-- owl carousel -->
       <script>
          $('.owl-carousel').owlCarousel({
