@@ -54,12 +54,10 @@ router.post("/do_register",async(req,resp)=>{
 router.post("/do_login",async(req,resp)=>{
     try {
         const udata = await User.findOne({email:req.body.email})
-        console.log(udata);
         const isvalid = await bcrypt.compare(req.body.pass,udata.pass)
         if(isvalid)
         {
             const token  = await jwt.sign({_id:udata._id},process.env.S_KEY)
-            console.log(token);
             resp.cookie("jwt",token)
             resp.redirect("/")
         }
@@ -123,6 +121,29 @@ router.get("/removecart",async(req,resp)=>{
         const _id =req.query.cid;
         await Cart.findByIdAndDelete(_id)
         resp.redirect("cart")
+    } catch (error) {
+        console.log(error);
+    }
+})
+router.get("/changeQty",async(req,resp)=>{
+    try {
+        const cartid =req.query.cartid
+        const value =req.query.value
+
+        const cartdata = await Cart.findOne({_id:cartid})
+        const pdata = await product.findOne({_id:cartdata.pid})
+        var qty =cartdata.qty+ Number(value) 
+        if(qty==0){
+            await Cart.findByIdAndDelete(cartid)
+            resp.send("udated")
+        }
+        else{
+        console.log(qty);
+        var total = qty*pdata.price
+
+        await Cart.findByIdAndUpdate(cartid,{qty:qty,total:total})
+        resp.send("udated")
+        }
     } catch (error) {
         console.log(error);
     }

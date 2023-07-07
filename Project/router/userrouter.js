@@ -11,7 +11,7 @@ router.get("/",async (req,resp)=>{
     
 })
 
-router.get("/cart",auth,(req,resp)=>{
+router.get("/cart",(req,resp)=>{
     resp.render("cart")
 })
 
