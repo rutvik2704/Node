@@ -1,37 +1,29 @@
-const Razorpay = require('razorpay');
 const express = require("express")
 const app = express()
-const cors = require("cors")
+const Razorpay = require("razorpay")
+var cors = require('cors')
 app.use(cors())
+app.get("/payment",(req,resp)=>{
 
-var instance = new Razorpay({ key_id: 'rzp_test_UFEqVoop7spM17', key_secret: 'PYK9ekdgijRYhyLTxgnkyDWQ' })
+    const amt = req.query.amt;
+    var instance = new Razorpay({
+        key_id: 'rzp_test_5jC6zic7O24gAS',
+        key_secret: 'xf5MY95P0IWcIDGZhb8jVB9j',
+      });
 
-
-
-app.get("/makepayment", async(req,resp)=>{
-
-    const amt = req.query.amt
-try {
-    
-    var order = await instance.orders.create({
-        amount: amt*100,
+      var options = {
+        amount:Number(amt)*100 ,  // amount in the smallest currency unit
         currency: "INR",
         receipt: "order_rcptid_11"
-    })
-    console.log(order);
-    resp.send(order)
-} catch (error) {
+      };
 
-console.log(error);
-}
+      instance.orders.create(options, function(err, order) {
+       resp.send(order)
+      });
+
 
 
 })
 
 
-
-
-
-app.listen(3000,()=>{
-    console.log("server running on port : "+3000);
-})
+app.listen(3000)

@@ -131,19 +131,20 @@ router.get("/changeQty",async(req,resp)=>{
         const value =req.query.value
 
         const cartdata = await Cart.findOne({_id:cartid})
-        const pdata = await product.findOne({_id:cartdata.pid})
+        console.log(cartdata);
+        // const pdata = await product.findOne({_id:cartdata.pid})
         var qty =cartdata.qty+ Number(value) 
-        if(qty==0){
-            await Cart.findByIdAndDelete(cartid)
-            resp.send("udated")
-        }
-        else{
+        // if(qty==0){
+        //     await Cart.findByIdAndDelete(cartid)
+        //     resp.send("udated")
+        // }
+        // else{
         console.log(qty);
-        var total = qty*pdata.price
+        // var total = qty*pdata.price
 
         await Cart.findByIdAndUpdate(cartid,{qty:qty,total:total})
         resp.send("udated")
-        }
+        // }
     } catch (error) {
         console.log(error);
     }
