@@ -118,7 +118,7 @@ router.get("/Aproduct",aauth,async(req,resp)=>{
     try {
         const catdata = await category.find()
         const pdata = await product.aggregate([{$lookup:{from:"categories",localField:"catid",foreignField:"_id",as:"category"}}])
-        console.log(pdata);
+        // console.log(pdata);
         resp.render("admin_product",{catdata:catdata,pdata:pdata})
     } catch (error) {
         console.log(error);

@@ -11,6 +11,8 @@ var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
+var cors = require('cors')
+app.use(cors())
 
 
 const publicPath = path.join(__dirname,"../public")
@@ -35,4 +37,3 @@ app.use("/",require("../router/adminrouter"))
 app.listen(PORT,()=>{
     console.log("server running on port : "+PORT);
 })
-//41.16

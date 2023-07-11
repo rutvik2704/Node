@@ -23,7 +23,7 @@
       <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
       <!-- owl stylesheets -->
       <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
-
+    
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 *{
@@ -408,13 +408,12 @@ button.btn{
             <div class="d-flex flex-column justify-content-end align-items-end">
                 <div class="d-flex px-3 pr-md-5 py-1 subtotal">
                     <div class="px-4">SubTotal</div>
-                    <div class="h5 font-weight-bold px-md-2">Rs.{{sum}}</div>
+                    <div class="h5 font-weight-bold px-md-2" id="amt">{{sum}}</div>
                     
                 </div>
                  <div class="d-flex px-3 pr-md-5 py-1 subtotal">
-                 <button class="btn" type="button" data-toggle="collapse" data-target="#table" aria-expanded="false"
-                    aria-controls="table"> Order now
-                </button>
+                 <button class="btn" type='button' id="rzp-button1 
+                 --0.0">Order now</button>
                 </div>
                 
             </div>
@@ -438,5 +437,61 @@ button.btn{
         button.parent().parent().find('input').val(newVal);
     });
     </script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+
+document.getElementById('rzp-button1').onclick = function(e){
+    e.preventDefault();
+    alert("ok")
+    const amt = document.getElementById("amt").textContent
+   
+    fetch("http://127.0.0.1:9000/payment?amt="+amt).then(data=>{
+        return data.json()
+    }).then(result=>{
+
+        var options = {
+    "key": "rzp_test_Tkw8jh5hipvkn6", // Enter the Key ID generated from the Dashboard
+    "amount": result.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Acme Corp",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": result.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+    
+       $.get("confirmOrder",{pid:response.razorpay_payment_id}
+       function(rt){
+        alert(rt)
+       })
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+
+    rzp1.open();
+   
+
+
+    }).catch(err=>{
+        console.log(err);
+    })
+
+
+
+  
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 </body>
 </html>

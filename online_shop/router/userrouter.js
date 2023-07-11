@@ -5,6 +5,9 @@ const product=require("../model/products")
 const User =require("../model/users") 
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const Razorpay = require("razorpay")
+const Order=require("../model/orders")
+
 router.get("/",async(req,resp)=>{
     const data = await category.find()
     const pdata = await product.find()
@@ -129,26 +132,79 @@ router.get("/changeQty",async(req,resp)=>{
     try {
         const cartid =req.query.cartid
         const value =req.query.value
-
+        console.log(cartid+""+value);
         const cartdata = await Cart.findOne({_id:cartid})
         console.log(cartdata);
-        // const pdata = await product.findOne({_id:cartdata.pid})
+         const pdata = await product.findOne({_id:cartdata.pid})
         var qty =cartdata.qty+ Number(value) 
-        // if(qty==0){
-        //     await Cart.findByIdAndDelete(cartid)
-        //     resp.send("udated")
-        // }
-        // else{
+        if(qty==0){
+            await Cart.findByIdAndDelete(cartid)
+            resp.send("udated")
+        }
+        else{
         console.log(qty);
-        // var total = qty*pdata.price
+        var total = qty*pdata.price
 
         await Cart.findByIdAndUpdate(cartid,{qty:qty,total:total})
         resp.send("udated")
-        // }
+        }
     } catch (error) {
         console.log(error);
     }
 })
+/******************payment*********************************/
+router.get("/payment",(req,resp)=>{
 
+    const amt = req.query.amt;
+    console.log(amt);
+    var instance = new Razorpay({
+        key_id: 'rzp_test_Tkw8jh5hipvkn6',
+        key_secret: 'EE5ZgRmRCDX9UiQKsPKqBRSD',
+      });
+
+      var options = {
+        amount:Number(amt)*100 ,  // amount in the smallest currency unit
+        currency: "INR",
+        receipt: "order_rcptid_11"
+      };
+
+      instance.orders.create(options, function(err, order) {
+       resp.send(order)
+      });
+
+
+
+})
+
+router.get("confirmOrder",auth,async(req,resp)=>{
+   try {
+    const payid = req.query.pid
+    const uid =req.query.uid
+
+    const cartProduct = await Cart.find({uid:uid})
+    var productlist=[]
+    var alltotal =0
+    for(var i=0;i<cartProduct.length;i++){
+        const prod = await product.findOne({_id:cartProduct[i]._id})
+        var pname= prod.pname
+        var price=prod.price
+        var qty = cartProduct[i].qty
+        var total = Number(price)*Number(qty)
+        productlist[i]={
+            pname:pname,
+            price:price,
+            qty:qty,
+            total:total
+        }
+        alltotal=alltotal+total;
+    }
+    const order = new Order({payid:payid,uid:uid,product:productlist,total:alltotal})
+    await order.save()
+    resp.send("Order confirned !!!!")
+
+
+   } catch (error) {
+    console.log(error);
+   } 
+})
 module.exports=router
-//
