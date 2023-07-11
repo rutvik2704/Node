@@ -132,9 +132,9 @@ router.get("/changeQty",async(req,resp)=>{
     try {
         const cartid =req.query.cartid
         const value =req.query.value
-        console.log(cartid+""+value);
+       
         const cartdata = await Cart.findOne({_id:cartid})
-        console.log(cartdata);
+       
          const pdata = await product.findOne({_id:cartdata.pid})
         var qty =cartdata.qty+ Number(value) 
         if(qty==0){
@@ -142,7 +142,7 @@ router.get("/changeQty",async(req,resp)=>{
             resp.send("udated")
         }
         else{
-        console.log(qty);
+       
         var total = qty*pdata.price
 
         await Cart.findByIdAndUpdate(cartid,{qty:qty,total:total})
@@ -156,10 +156,9 @@ router.get("/changeQty",async(req,resp)=>{
 router.get("/payment",(req,resp)=>{
 
     const amt = req.query.amt;
-    console.log(amt);
     var instance = new Razorpay({
-        key_id: 'rzp_test_Tkw8jh5hipvkn6',
-        key_secret: 'EE5ZgRmRCDX9UiQKsPKqBRSD',
+        key_id: 'rzp_test_4cwlFGM82I023S',
+        key_secret: 'rotgs5FJ8G8BCE9ameGr5nPY',
       });
 
       var options = {
@@ -176,35 +175,42 @@ router.get("/payment",(req,resp)=>{
 
 })
 
-router.get("confirmOrder",auth,async(req,resp)=>{
-   try {
-    const payid = req.query.pid
-    const uid =req.query.uid
+router.get("confirmOrder",auth,async(req,resp)=>
+{
+    try {
+        const payid = req.query.pid
+        const uid = req.user._id
 
-    const cartProduct = await Cart.find({uid:uid})
-    var productlist=[]
-    var alltotal =0
-    for(var i=0;i<cartProduct.length;i++){
-        const prod = await product.findOne({_id:cartProduct[i]._id})
-        var pname= prod.pname
-        var price=prod.price
-        var qty = cartProduct[i].qty
-        var total = Number(price)*Number(qty)
-        productlist[i]={
-            pname:pname,
-            price:price,
-            qty:qty,
-            total:total
+        const cartProduct =await Cart.find({uid:uid})
+        var productlist =[];
+        var alltotal =0;
+        for(var i=0;i<cartProduct.length;i++){
+            const prod = await Product.findOne({_id:cartProduct[i].pid})
+
+            var pname =prod.pname
+            var price =prod.price
+            var qty=cartProduct[i].qty
+            var total = Number(price)*Number(qty)
+
+            productlist[i]={
+                pname:pname,
+                price:price,
+                qty:qty,
+                total:total
+            }
+            alltotal = alltotal+total;
+
         }
-        alltotal=alltotal+total;
+        const order=new Order({payid:payid,uid:uid,product:productlist,total:alltotal})
+        await order.save()
+        resp.send("Order confirmed !!!")
+
+
+
+    } catch (error) {
+        console.log(error);
     }
-    const order = new Order({payid:payid,uid:uid,product:productlist,total:alltotal})
-    await order.save()
-    resp.send("Order confirned !!!!")
-
-
-   } catch (error) {
-    console.log(error);
-   } 
 })
+
+
 module.exports=router
