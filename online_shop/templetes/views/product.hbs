@@ -44,37 +44,19 @@
                </div>
             </div>
             <div class="row">
-               <div class="col-md-12">
-                  <div class="owl-carousel owl-theme">
-                     <div class="item">
-                        <div class="image_main"><img src="images/img-2.png" alt="image" /></div>
-                        <h6 class="price_text">Price <br><span style="color: #f75261;">$10</span></h6>
+               <div class="col-md-12"style="display: flex; flex-wrap: wrap;">
+                  {{#each pdata}}
+                     <div class="item" style="margin: 10px;" >
+                        <div class="image_main" >
+                           <img src="productimg/{{this.img}}" alt="image"  width="200px" height="100px"/>
+                        </div>
+                              <span style="color: #000000;">{{this.pname}}</span><br>
+                              <span style="color: #000000;">Rs. {{this.price}}</span><br>
+                              {{!-- <a href="add_cart?pid={{this._id}}"class="add-to-cart">Add to Cart</a> --}}
+                              <button class="add-to-cart"  onclick="add_cart('{{this._id}}')">Add to Cart</button>
                      </div>
-                     <div class="item">
-                        <div class="image_main"><img src="images/img-2.png" alt="image" /></div>
-                        <h6 class="price_text">Price <br><span style="color: #f75261;">$10</span></h6>
-                     </div>
-                     <div class="item">
-                        <div class="image_main"><img src="images/img-2.png" alt="image" /></div>
-                        <h6 class="price_text">Price <br><span style="color: #f75261;">$10</span></h6>
-                     </div>
-                     <div class="item">
-                        <div class="image_main"><img src="images/img-2.png" alt="image" /></div>
-                        <h6 class="price_text">Price <br><span style="color: #f75261;">$10</span></h6>
-                     </div>
-                     <div class="item">
-                        <div class="image_main"><img src="images/img-2.png" alt="image" /></div>
-                        <h6 class="price_text">Price <br><span style="color: #f75261;">$10</span></h6>
-                     </div>
-                     <div class="item">
-                        <div class="image_main"><img src="images/img-2.png" alt="image" /></div>
-                        <h6 class="price_text">Price <br><span style="color: #f75261;">$10</span></h6>
-                     </div>
-                     <div class="item">
-                        <div class="image_main"><img src="images/img-2.png" alt="image" /></div>
-                        <h6 class="price_text">Price <br><span style="color: #f75261;">$10</span></h6>
-                     </div>
-                  </div>
+                  {{/each}}
+                 
                </div>
             </div>
          </div>
@@ -135,11 +117,7 @@
       </div>
       <!-- footer section end -->
       <!-- copyright section start -->
-      <div class="copyright_section">
-         <div class="container">
-            <p class="copyright_text">© 2020 All Rights Reserved.<a href="https://html.design"> Free html Templates</a></p>
-         </div>
-      </div>
+      
       <!-- copyright section end  -->
       <!-- Javascript files-->
       <script src="js/jquery.min.js"></script>

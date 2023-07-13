@@ -191,7 +191,6 @@ router.get("confirmOrder",auth,async(req,resp)=>
             var price =prod.price
             var qty=cartProduct[i].qty
             var total = Number(price)*Number(qty)
-
             productlist[i]={
                 pname:pname,
                 price:price,
@@ -202,6 +201,7 @@ router.get("confirmOrder",auth,async(req,resp)=>
 
         }
         const order=new Order({payid:payid,uid:uid,product:productlist,total:alltotal})
+        console.log(order);
         await order.save()
         resp.send("Order confirmed !!!")
 
